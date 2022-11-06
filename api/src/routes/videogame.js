@@ -1,5 +1,5 @@
 const express = require('express');
-const fn = require('./funciones.js');
+const fn = require('../middlewares/funciones');
 const { Videogame, Genre } = require('../db');
 const router = express.Router();
 
@@ -36,10 +36,10 @@ router.post('/', async (req, res) => {
   });
   const genreBD = await Genre.findAll({
     where: { 
-       name : genre 
+       name: genre 
       }
   });
-  videogameCreated.addGenre(genreBD);
+  videogameCreated.addGenres(genreBD);
   res.status(200).send('Videogame created successfully ')
 
 });

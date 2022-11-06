@@ -1,0 +1,52 @@
+.cardVG {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+  margin: 60px;
+  border: solid 3px black;
+  background: rgba( 255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37);
+  backdrop-filter: blur( 18px);
+  -webkit-backdrop-filter: blur( 18px);
+  border: 1px solid rgba( 255, 255, 255, 0.18);
+  border-radius: 5px;
+}
+
+.cardName {
+  display: flex;
+  font-family: 'Roboto';
+  font-size: 20px;
+  width: 100%;
+  color: blue;
+}
+
+.cardName h3 {
+  margin: 0 5;
+  width: 100%;
+  color: rgba(30, 6, 1, 0.986);
+}
+
+.cardImage {
+  height: 300px;
+  width: 380px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.cardGenres {
+  display: flex;
+  font-family: 'Roboto';
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.cardGenres h5 {
+  margin: 0;
+  text-decoration: none;
+  color: rgba(2, 23, 23, 0.986);
+}
