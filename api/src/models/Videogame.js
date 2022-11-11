@@ -18,6 +18,10 @@ module.exports = (sequelize) => {
       type: DataTypes.TEXT,
       allowNull: false,
     },
+    image: {
+      type: DataTypes.TEXT,
+      defaultValue: "https://media.rawg.io/media/games/d82/d82990b9c67ba0d2d09d4e6fa88885a7.jpg"
+    },
     released: {
       type: DataTypes.DATEONLY,
       defaultValue: DataTypes.NOW,
@@ -29,11 +33,6 @@ module.exports = (sequelize) => {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
     },
-    createdInDB: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false, 
-      defaultValue: true,
-    }
   },
   {
     timestamps:false,

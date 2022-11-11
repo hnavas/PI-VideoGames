@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
   const {name} = req.query;
   let allVideogames = await fn.getAllVideogame();
   if(name) {
-    let filteredByName = await allVideogames.filter(vg => vg.name.toLowerCase().includes(name.toLowerCase()));
+    let filteredByName =  allVideogames.filter(vg => vg.name.toLowerCase().includes(name.toLowerCase()));
     filteredByName.length ?
     res.status(200).send(filteredByName) :
     res.status(404).send('No se encontro el Videogame'); 
@@ -24,15 +24,15 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { name, description, released, rating, platforms, createdInDB, genre  } = req.body;
+  const { name, description, released, rating, platforms, genre, image  } = req.body;
   if(!name || !description || !platforms) return res.status(404).send('Faltan datos obligatorios');
   const videogameCreated = await Videogame.create({
     name,
     description,
+    image,
     released,
     rating,
-    platforms,
-    createdInDB,
+    platforms
   });
   const genreBD = await Genre.findAll({
     where: { 

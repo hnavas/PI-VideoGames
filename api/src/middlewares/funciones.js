@@ -8,7 +8,7 @@ const getVideogameApi = async () => {
   let pag = 1;
   while (pag <= 5) { 
     const urlOfApi = await axios.get(`${urlApi}games?key=${API_KEY}&page=${pag}`);
-    const getDataApi = await urlOfApi.data.results.map(vg => {
+    const getDataApi = urlOfApi.data.results.map(vg => {
       const allData = {
         id: vg.id, 
         name: vg.name,
@@ -33,13 +33,14 @@ const getVideogameDB = async () => {
       attributes: ['name'],
       through: {
         attributes: [],
-      }, 
+      },
     }
   }); 
   const arrVgDB = vgDB.map(el => {
     return {
       id: el.id,
       name: el.name,
+      image: el.image,
       genres: el.Genres.map(el => el.name),
       rating: el.rating
     }

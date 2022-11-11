@@ -1,14 +1,33 @@
-import { React, useState, useEffect } from 'react';
+import React from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../actions/index';
 import { Link } from 'react-router-dom';
 import Card from './Card'
+import Paginate from './Paginate';
 import s from './Home.module.css'
 
+
 export default function Home() {
+
   const dispatch = useDispatch();
   const stateVideogames = useSelector(state => state.videogames);
   const stateGenres = useSelector(state => state.genres);
+
+  const [order, setOrder] = useState(false);
+
+  //PAGINADO//
+  //1. Defino estados locales
+  const [actualPage, setActualPage] = useState(1);
+  const [gamesByPage, ] = useState(15);
+  //2. Declaro los indices de los games que se mostraran por pagina
+  const lastGame = actualPage * gamesByPage;
+  const firstGame = lastGame - gamesByPage;
+  const actualGames = stateVideogames.slice(firstGame, lastGame);
+  //3. declaro mi constate de paginado
+  const paginate = numPage => {
+    setActualPage(numPage);
+  }
 
   useEffect(() => {
     dispatch(actions.getVideogames());
@@ -20,20 +39,24 @@ export default function Home() {
     dispatch(actions.getVideogames());
   }
 
-  let handleFilterByGenres = (e) => { //Filtrar por generos
-
+  let handleFilterByStatus = (e) => {
+    dispatch(actions.filterByStatus(e.target.value));
   }
 
-  let handleFilterByCreated = (e) => { //Filtrar por API o BD
-
+  let handleFilterByGenres = (e) => {
+    dispatch(actions.filterByGenres(e.target.value));
   }
 
-  let handleOrderByAZ = (e) => { //Ordenar Alfabeticamente
-
+  let handleOrderByAZ = (e) => {
+    e.preventDefault();
+    dispatch(actions.orderAlphabetically(e.target.value));
+    setActualPage(1);
+    setOrder(!order)
   }
 
-  let handleOrderByRating = (e) => { //Ordenar por valor del Rating
-
+  let handleOrderByRating = (e) => {
+    dispatch(actions.orderByRating(e.target.value));
+    setOrder(!order)
   }
 
   return (
@@ -46,39 +69,56 @@ export default function Home() {
         <button onClick={(e) => handleUpdate(e)}>Reload Videogames</button>
       </div>
       <div className={s.filterBar}>
-        <select> // Ordenar Alfabeticamente
-          <option value='default' hidden selected>--Order by AZ--</option>
-          <option value='asc'>Sort A-Z</option>
-          <option value='desc'>Sort Z-A</option>
+        <select onChange={(e) => handleOrderByAZ(e)}> 
+          <option hidden >--Order by AZ--</option>
+          <option value='az'>Sort A-Z</option>
+          <option value='za'>Sort Z-A</option>
         </select>
-        <select> // Ordenar por Rating
-          <option value='default' hidden selected>--Order by Rating--</option>
-          <option value='low'>Low Rating</option>
+
+        <select onChange={(e) => handleOrderByRating(e)}> 
+          <option value='' hidden >--Order by Rating--</option>
           <option value='high'>High Rating</option>
+          <option value='low'>Low Rating</option>
         </select>
-        <select> //Filtrar por existentes o creados
-          <option value='default' hidden selected>--Filter by Status--</option>
+
+        <select onChange={(e) => handleFilterByStatus(e)}>
+          <option value='' hidden>--Filter by Status--</option>
           <option value='all'>All</option>
           <option value='created'>Created</option>
-          <option value='api'>Existing</option>
+          <option value='existing'>Existing</option>
         </select>
-        <select>
-          <option value='default' hidden selected>--Filter By Genre--</option>
+
+        <select onChange={(e) => handleFilterByGenres(e)}>
+          <option hidden >--Filter By Genre--</option>
+          <option value='all'>All Genres</option>
+          {
+            stateGenres.map(g => (
+              <option key={g.id} value={g.name}>{g.name}</option>
+            ))
+          }
         </select>
       </div>
-      <h1>Videogames</h1> 
+      <Paginate
+        gamesByPage={gamesByPage}
+        stateVideogames = {stateVideogames.length}
+        actualPage = {actualPage}
+        paginate = {paginate}
+      />
+
+      <h1>Videogames</h1>
+
       <div className={s.containerCard}>
         {
-          stateVideogames && stateVideogames.map(vg => {
+          actualGames && actualGames.map(game => {
             return (
-              <div className={s.cards}>
-                <Link to={`home/${vg.id}`}>
+              <div className={s.cards} key={game.id}>
+                <Link to={`home/${game.id}`} >
                   <Card
-                    id={vg.id}
-                    key={vg.id}
-                    name={vg.name}
-                    image={vg.image}
-                    genres={vg.genres}
+                    id={game.id}
+                    key={game.id}
+                    name={game.name}
+                    image={game.image}
+                    genres={game.genres.join(' - ')}
                   />
                 </Link>
               </div>
@@ -86,6 +126,12 @@ export default function Home() {
           })
         }
       </div>
+      <Paginate
+        gamesByPage={gamesByPage}
+        stateVideogames = {stateVideogames.length}
+        actualPage = {actualPage}
+        paginate = {paginate}
+      />
     </div>
   )
 }
