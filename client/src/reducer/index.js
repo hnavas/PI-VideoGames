@@ -1,8 +1,9 @@
 import { 
   GET_VIDEOGAMES, 
-  GET_GENRES, 
+  GET_GENRES,
+  GET_PLATFORMS,
   GET_DETAILS, 
-  GET_VIDEOGAME_BY_NAMES, 
+  GET_VIDEOGAME_BY_NAME, 
   GET_VIDEOGAME_BY_Id, 
   POST_VIDEOGAME, 
   ORDER_ALPHABETICALLY,
@@ -15,6 +16,7 @@ const initialState = {
   videogames: [],
   allFilteredGames: [],
   genres: [],
+  platforms: [],
 };
 
 function rootReducer(state = initialState, action) {
@@ -29,6 +31,25 @@ function rootReducer(state = initialState, action) {
       return {
         ...state,
         genres: action.payload
+      }
+    case GET_PLATFORMS:
+      return {
+        ...state,
+        platforms: action.payload
+      }
+    case GET_VIDEOGAME_BY_NAME:
+      return {
+        ...state,
+        videogames: action.payload
+      }
+    case GET_VIDEOGAME_BY_Id:
+      return {
+        ...state,
+        videogames: action.payload
+      }
+    case POST_VIDEOGAME:
+      return {
+        ...state,
       }
     case ORDER_ALPHABETICALLY:
       const sortedGamesName = action.payload === 'az' ?

@@ -28,8 +28,8 @@ export default function Paginate({gamesByPage, stateVideogames, actualPage, pagi
         }
       </ul>
       <div>
-        {actualPage  > 1 ? <button onClick={()=>paginate(actualPage - 1)}>{prev}</button> : null}
-        {actualPage < totalPages ? <button onClick={()=>paginate(actualPage + 1)}>{next}</button> : null}
+        {actualPage  > 1 ? <button className={p.btnPage} onClick={()=>paginate(actualPage - 1)}>{prev}</button> : null}
+        {actualPage < totalPages ? <button className={p.btnPage}  onClick={()=>paginate(actualPage + 1)}>{next}</button> : null}
       </div>
     </div>
   )

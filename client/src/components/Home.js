@@ -1,10 +1,10 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as actions from '../actions/index';
 import { Link } from 'react-router-dom';
+import * as actions from '../actions/index';
 import Card from './Card'
 import Paginate from './Paginate';
+import SearchBar from './SearchBar';
 import s from './Home.module.css'
 
 
@@ -14,12 +14,12 @@ export default function Home() {
   const stateVideogames = useSelector(state => state.videogames);
   const stateGenres = useSelector(state => state.genres);
 
-  const [order, setOrder] = useState(false);
+  const [ order, setOrder ] = useState(false);
 
   //PAGINADO//
   //1. Defino estados locales
-  const [actualPage, setActualPage] = useState(1);
-  const [gamesByPage, ] = useState(15);
+  const [ actualPage, setActualPage ] = useState(1);
+  const [ gamesByPage, ] = useState(15);
   //2. Declaro los indices de los games que se mostraran por pagina
   const lastGame = actualPage * gamesByPage;
   const firstGame = lastGame - gamesByPage;
@@ -41,10 +41,12 @@ export default function Home() {
 
   let handleFilterByStatus = (e) => {
     dispatch(actions.filterByStatus(e.target.value));
+    setActualPage(1);
   }
 
   let handleFilterByGenres = (e) => {
     dispatch(actions.filterByGenres(e.target.value));
+    setActualPage(1);
   }
 
   let handleOrderByAZ = (e) => {
@@ -56,47 +58,55 @@ export default function Home() {
 
   let handleOrderByRating = (e) => {
     dispatch(actions.orderByRating(e.target.value));
+    setActualPage(1);
     setOrder(!order)
   }
 
   return (
     <div className={s.container}>
       <h1 className={s.title}>Welcome to Home</h1>
-      <div className={s.linkCreate}>
-        <Link to='/videogame'>
-          <button>Create Videogame</button>
-        </Link>
-        <button onClick={(e) => handleUpdate(e)}>Reload Videogames</button>
+      <SearchBar/>
+      <div className={s.containerButtons}>
+        <div>
+          <Link to='/create'>
+            <button className={s.refreshButton} >Create</button>
+          </Link>
+        </div>
+        <div>
+          <button className={s.refreshButton} onClick={(e) => handleUpdate(e)}>Reload</button>
+        </div>
       </div>
-      <div className={s.filterBar}>
-        <select onChange={(e) => handleOrderByAZ(e)}> 
-          <option hidden >--Order by AZ--</option>
-          <option value='az'>Sort A-Z</option>
-          <option value='za'>Sort Z-A</option>
-        </select>
+      <div>
+        <div className={s.filterBar}>
+          <select onChange={(e) => handleOrderByAZ(e)}> 
+            <option hidden >--Order by AZ--</option>
+            <option value='az'>Sort A-Z</option>
+            <option value='za'>Sort Z-A</option>
+          </select>
 
-        <select onChange={(e) => handleOrderByRating(e)}> 
-          <option value='' hidden >--Order by Rating--</option>
-          <option value='high'>High Rating</option>
-          <option value='low'>Low Rating</option>
-        </select>
+          <select onChange={(e) => handleOrderByRating(e)}> 
+            <option value='' hidden >--Order by Rating--</option>
+            <option value='high'>High Rating</option>
+            <option value='low'>Low Rating</option>
+          </select>
 
-        <select onChange={(e) => handleFilterByStatus(e)}>
-          <option value='' hidden>--Filter by Status--</option>
-          <option value='all'>All</option>
-          <option value='created'>Created</option>
-          <option value='existing'>Existing</option>
-        </select>
+          <select onChange={(e) => handleFilterByStatus(e)}>
+            <option value='' hidden>--Filter by Status--</option>
+            <option value='all'>All</option>
+            <option value='created'>Created</option>
+            <option value='existing'>Existing</option>
+          </select>
 
-        <select onChange={(e) => handleFilterByGenres(e)}>
-          <option hidden >--Filter By Genre--</option>
-          <option value='all'>All Genres</option>
-          {
-            stateGenres.map(g => (
-              <option key={g.id} value={g.name}>{g.name}</option>
-            ))
-          }
-        </select>
+          <select onChange={(e) => handleFilterByGenres(e)}>
+            <option hidden >--Filter By Genre--</option>
+            <option value='all'>All Genres</option>
+            {
+              stateGenres.map(g => (
+                <option key={g.id} value={g.name}>{g.name}</option>
+              ))
+            }
+          </select>
+        </div>
       </div>
       <Paginate
         gamesByPage={gamesByPage}
@@ -105,14 +115,12 @@ export default function Home() {
         paginate = {paginate}
       />
 
-      <h1>Videogames</h1>
-
       <div className={s.containerCard}>
         {
           actualGames && actualGames.map(game => {
             return (
               <div className={s.cards} key={game.id}>
-                <Link to={`home/${game.id}`} >
+                <Link to={`videogame/${game.id}`} >
                   <Card
                     id={game.id}
                     key={game.id}

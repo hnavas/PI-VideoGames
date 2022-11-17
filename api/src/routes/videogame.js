@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   const {name} = req.query;
-  let allVideogames = await fn.getAllVideogame();
+  let allVideogames = await fn.getAllVideogames();
   if(name) {
     let filteredByName =  allVideogames.filter(vg => vg.name.toLowerCase().includes(name.toLowerCase()));
     filteredByName.length ?
@@ -26,21 +26,29 @@ router.get('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const { name, description, released, rating, platforms, genre, image  } = req.body;
   if(!name || !description || !platforms) return res.status(404).send('Faltan datos obligatorios');
-  const videogameCreated = await Videogame.create({
-    name,
-    description,
-    image,
-    released,
-    rating,
-    platforms
-  });
-  const genreBD = await Genre.findAll({
-    where: { 
-       name: genre 
+  try {
+    const [videogameCreated, status] = await Videogame.findOrCreate({
+      where: {name: name},
+      defaults: {
+        name,
+        description,
+        image,
+        released,
+        rating,
+        platforms
       }
-  });
-  videogameCreated.addGenres(genreBD);
-  res.status(200).send('Videogame created successfully ')
-
+    });
+    const genreBD = await Genre.findAll({
+      where: { 
+         name: genre 
+        }
+    }); 
+    videogameCreated.addGenre(genreBD);
+    if(status) res.status(200).send('Videogame created successfully ')
+    // res.status(200).send('The video game was not created, the name already exists. ')
+  } catch (error) {
+    console.log(error)
+  } 
 });
+
 module.exports = router;

@@ -1,0 +1,41 @@
+.container {
+  display: inline-block;
+  width: 90%;
+  padding: 10px;
+  margin: auto;
+  border: none;
+  border-radius: 2px;
+  background-color:rgba(70, 63, 63, 0.815);
+  
+  
+}
+
+.input {
+  width: 500px;
+  height: 40px;
+  padding-left: 10px;
+  border: 1px solid rgb(3, 153, 48);
+  border-radius: 7px;
+  font-size: larger;
+}
+
+.button {
+  height: 40px;
+  width: 80px;
+  margin-left: 10px;
+  color:  rgb(3, 153, 48);
+  border: 1px solid  rgb(3, 153, 48);
+  border-radius: 7px;
+  background-color: transparent;
+  transition: 0.5s;
+  text-decoration: none;
+  font-size: larger;
+
+}
+
+.button:hover, .button:focus {
+  border-color: rgb(3, 153, 48);
+  background-color: rgb(3, 153, 48);
+  color: #fff;
+  box-shadow: inset 500px 0 0 0 green;
+}

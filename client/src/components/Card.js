@@ -3,16 +3,17 @@ import s from './Card.module.css';
 
 export default function Card({id, name, rating, genres, image}){
   return (
-    <div className={s.cardVG}>
-      <div className={s.cardName}>
-        <h3>{name}</h3>
-      </div>
-      <div>
-        <img src={image}  className={s.cardImage} alt={`${name}`}/>
-      </div>
-      <div className={s.cardGenres}>
-        <h5>Genres: {genres}</h5>
-      </div>
+    <div className={s.box}>
+        <div className={s.card}>
+          <div className={s.imgBx}>
+              <img src={image}  alt={`${name}`}/>
+          </div>
+          <div className={s.details}>
+            <h2>{name}<br/>
+            <span>{genres}</span></h2>
+          </div>
+        </div>
     </div>
+
   )
 }

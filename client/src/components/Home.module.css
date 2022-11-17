@@ -1,46 +1,64 @@
-.container {
-  background-color: rgba(0, 0, 0, 0.276);
+h1, h2, h3, h4, h5, a {
+  margin: 0;
+  text-decoration: none;
 }
+
+.container {
+  width: 100%;
+  height: 340vh;
+  background-image: linear-gradient(
+    to bottom right,
+    #023e8a 0%,
+    #5fa8d3 20%,
+    #0a1128 40%,
+    #001f54 60%,
+    #5fa8d3 70%
+  );
+
+  background-size: 200% 200%;
+  animation: movimiento 15s linear infinite alternate;
+}
+@keyframes movimiento {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 100% 100%;
+  }
+}
+
 .containerCard {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  background-color: rgba(12, 8, 1, 0.252);
+  border-radius: 15px;
+  margin: 0 80px ;
 }
 
-.title {
+.containerButtons {
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.containerRefreshButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 40px;
+  justify-content: space-evenly;
+  flex-direction: row;
+  margin: 20px;
+  border-radius: 1px;
 }
 
 .refreshButton {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-  width: 100px;
-  font-family: 'Bungee';
-  font-size: 20px;
-  -webkit-text-stroke: 1px black;
-  color: rgba(5, 22, 22, 0.986);
-  border-radius: 999px;
-  border: 1px solid #B2EBF2;
-  background-color: transparent;
+  height: 40px;
+  width: 200px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: none;
+  background-color:#081f2251 ;
+  color: aliceblue;
 }
 
 .refreshButton:hover {
   transition: 1s;
   background-color: #02282d;
-  color: black;
-  border: 1px solid black;
+  color: rgb(238, 243, 243);
 }
 
 .filterBar {
@@ -48,8 +66,7 @@
   justify-content: space-around;
   align-items: center;
   background-color: transparent;
-  align-items: center;
-  margin: 0;
+  margin: 20px;
   padding: 0;
   height: 40px;
 }
@@ -61,36 +78,12 @@
   margin: 0;
   padding: 0;
   height: 40px;
-  font-family: 'Bungee';
   font-size: 15px;
-  color: rgba(1, 8, 8, 0.787);
-  border: solid 1px;
-  background-color: transparent;
+  border-radius: 20px;
+  border: none;
+  background-color: rgb(61, 110, 156);
 }
 
-select,
-option {
-  color: black;
-}
-
-.linkCreate {
-  font-family: 'Bungee';
-  font-size: 18px;
-  color: rgba(1, 14, 14, 0.986);
-  /* border: 1px solid #021416c8; */
-  border-radius: 3px;
-  text-decoration: none;
-  margin: 20px;
-}
-
-.linkCreate:hover {
-  transition: 1s;
-  background-color: #B2EBF2;
-  color: black;
-  border: 1px solid black;
-}
-
-h1, h2, h3, h4 , h5, a {
-  margin: 0;
-  text-decoration: none;
+.filterBar option {
+  color: white;
 }

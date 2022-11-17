@@ -27,7 +27,7 @@ const getVideogameApi = async () => {
 };
 
 const getVideogameDB = async () => {
-  const vgDB = await Videogame.findAll({
+  const gamesDB = await Videogame.findAll({
     include: {
       model: Genre, 
       attributes: ['name'],
@@ -36,7 +36,7 @@ const getVideogameDB = async () => {
       },
     }
   }); 
-  const arrVgDB = vgDB.map(el => {
+  const arrGamesDB = gamesDB.map(el => {
     return {
       id: el.id,
       name: el.name,
@@ -45,12 +45,12 @@ const getVideogameDB = async () => {
       rating: el.rating
     }
   })
-  return arrVgDB;
+  return arrGamesDB;
 };
 
-const getAllVideogame = async () => {
+const getAllVideogames = async () => {
   const apiData = await getVideogameApi();
-  const dbData = await getVideogameDB(); 
+  const dbData = await getVideogameDB();
   const totalData = apiData.concat(dbData);
   return totalData;
 }
@@ -90,13 +90,32 @@ const getAllGenres = async () => {
         name: genre
       }
     })
+  }); 
+  const allGenresDB = await Genre.findAll({
+    order:[
+      ['name', 'ASC'],
+    ]
   });
-  const allGenresDB = await Genre.findAll();
   return allGenresDB;
 }
 
+const getPlatfoms = async () => {
+  const mapPlatforms = await getVideogameApi();
+  const arrPlatforms = mapPlatforms.map(p => p.platforms);
+  const allPlatforms = arrPlatforms.map(p => {
+    for (let i = 0; i < p.length; i++) return p[i];
+  })
+  const filteredPlatforms = [... new Set(allPlatforms)];
+  return filteredPlatforms.sort((a, b) => {
+    if(a > b) return 1;
+    if(b > a) return -1;
+    return 0;
+  });
+}
+
 module.exports = {
-  getAllVideogame,
+  getAllVideogames,
   getAllGenres,
   filterById,
+  getPlatfoms,
 };

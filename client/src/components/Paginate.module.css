@@ -1,5 +1,5 @@
 .container{
-  margin: auto;
+  margin: 10px;
   top: 1%;
   display: inline-block;
   justify-content: center;
@@ -14,7 +14,11 @@
   list-style: none;
   margin: 0px;
   padding: 0px;
-  max-width: 250px;
+  max-width: 400px;
+}
+
+.container li {
+  margin: 2px;
 }
 
 .selectedPage{
@@ -37,4 +41,9 @@
 .page:hover{
   background: white;
   background-color: rgba(135, 131, 133, 0.363);
+}
+
+.btnPage {
+  width: 80px;
+  text-transform: uppercase;
 }

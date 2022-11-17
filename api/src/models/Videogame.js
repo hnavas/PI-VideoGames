@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
     },
     image: {
       type: DataTypes.TEXT,
-      defaultValue: "https://media.rawg.io/media/games/d82/d82990b9c67ba0d2d09d4e6fa88885a7.jpg"
+      defaultValue: "https://api.lorem.space/image/game?w=300&amp;amp;amp;amp;h=420"
     },
     released: {
       type: DataTypes.DATEONLY,

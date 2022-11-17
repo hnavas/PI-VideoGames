@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { 
   GET_VIDEOGAMES, 
-  GET_GENRES, 
+  GET_GENRES,
+  GET_PLATFORMS,
   GET_VIDEOGAME_BY_NAME, 
   GET_VIDEOGAME_BY_Id, 
-  POST_VIDEOGAME,
   FILTER_BY_STATUS,  
   FILTER_BY_GENRES,
   ORDER_ALPHABETICALLY,
@@ -23,21 +23,29 @@ export function getVideogames() {
 
 export function getByName(name) {
   return async function(dispatch) {
-    let res = await axios.get(`http://localhost:3001/videogames?name=${name}`);
-    return dispatch({
-      type : GET_VIDEOGAME_BY_NAME,
-      payload: res.data
-    });
+    try {
+      let res = await axios.get(`http://localhost:3001/videogames?name=${name}`);
+      return dispatch({
+        type : GET_VIDEOGAME_BY_NAME,
+        payload: res.data
+      });
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 
 export function getById(id) {
   return async function(dispatch) {
-    let res = await axios.get(`http://localhost:3001/videogames/${id}`);
-    return dispatch({
-      type: GET_VIDEOGAME_BY_Id,
-      payload: res.data
-    });
+    try {
+      let res = await axios.get(`http://localhost:3001/videogames/${id}`);
+      return dispatch({
+        type: GET_VIDEOGAME_BY_Id,
+        payload: res.data
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
@@ -48,6 +56,16 @@ export function getGenres() {
       type: GET_GENRES,
       payload: res.data
     });
+  }
+}
+
+export function getPlatforms() {
+  return async function(dispatch) {
+    let res = await axios.get('http://localhost:3001/platforms');
+    return dispatch({
+      type: GET_PLATFORMS,
+      payload: res.data
+    })
   }
 }
 
