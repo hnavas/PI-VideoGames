@@ -10,9 +10,9 @@
 }
 .box {
   width: 350px;
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  grid-gap: 25px;
+  grid-gap: 25px; */
   margin: 35px;
 }
 .card {
@@ -44,6 +44,7 @@ box-shadow: 0 2px 20px rgba(0,0,0,.2);
 transform: rotate(10deg);
 box-shadow: 0 2px 20px rgba(0,0,0,.2);
 }
+
 .card .imgBx{
 position: absolute;
 top: 10px;
@@ -55,8 +56,7 @@ transition: 0.5s;
 z-index: 1;
 }
 
-.card:hover .imgBx
-{
+.card:hover .imgBx {
   bottom: 80px;
 }
 
@@ -78,7 +78,7 @@ z-index: 1;
     text-align: center;
 }
 
-.card .details h2{
+.card .details h2 {
  margin: 0;
  padding: 0;
  font-weight: 600;
@@ -87,7 +87,7 @@ z-index: 1;
  text-transform: uppercase;
 } 
 
-.card .details h2 span{
+.card .details h2 span {
 font-weight: 400;
 font-size: 14px;
 color: #f38695;

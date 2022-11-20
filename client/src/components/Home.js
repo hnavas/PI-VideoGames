@@ -120,7 +120,7 @@ export default function Home() {
           actualGames && actualGames.map(game => {
             return (
               <div className={s.cards} key={game.id}>
-                <Link to={`videogame/${game.id}`} >
+                <Link to={`home/${game.id}`} >
                   <Card
                     id={game.id}
                     key={game.id}
@@ -134,6 +134,7 @@ export default function Home() {
           })
         }
       </div>
+      
       <Paginate
         gamesByPage={gamesByPage}
         stateVideogames = {stateVideogames.length}

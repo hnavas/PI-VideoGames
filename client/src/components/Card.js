@@ -9,8 +9,10 @@ export default function Card({id, name, rating, genres, image}){
               <img src={image}  alt={`${name}`}/>
           </div>
           <div className={s.details}>
-            <h2>{name}<br/>
-            <span>{genres}</span></h2>
+            <h2>{name
+            }<br/>
+            <span>{genres}</span>
+            </h2>
           </div>
         </div>
     </div>

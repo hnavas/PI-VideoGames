@@ -11,12 +11,12 @@ const formValidate = (form) => {
   if(!/^[a-zA-Z\s]*$/.test(form.name)){errors.name = "Pleace, enter only letters";}
   if(!form.description) errors.description = "Sorry!, description is required";
   if(!/^[a-zA-Z0-9][a-zA-Z0-9]+\s[a-zA-Z0-9]+\s[a-zA-Z0-9]+/.test(form.description)){errors.description = "Write minimum three words"}
-  if(/^(?:([A-Za-z]+):)?(\/{0,3})([0-9.\-A-Za-z]+)(?::(\d+))?(?:\/([^?#]*))?(?:\?([^#]*))?(?:#(.*))?$/.test(form.image)){errors.image = "Incorrect url format"}
+  if(!/^https?:\/\/[\w-]+(\.[\w-]+)+[/#?]?.*$/.test(form.image)){errors.image = "Incorrect url format"}
   if(/^(?:0?[1-9]|1[1-2])([-/.])(3[01]|[12][0-9]|0?[1-9])\1\d{4}$/.test(form.released)){errors.released = "Incorrect date format"};
   if(form.rating < 0 || form.rating > 10) errors.rating = "Sorry!, enter a number from 0 to 10";
   if(!form.platforms.length) errors.platforms = "Sorry!, platforms is required";
   if(!form.genre.length) errors.genre = "Sorry!, genre is required";
-
+  console.log(errors)
   return errors;
 }
 
@@ -40,6 +40,7 @@ export default function CreateGame() {
   });
   
   const handleChangeInputs = (e) => {
+    e.preventDefault();
     setForm({
       ...form,
       [e.target.name]: e.target.value
@@ -49,28 +50,40 @@ export default function CreateGame() {
       ...form,
       [e.target.name]: e.target.value
     }))
+
+    console.log(form)
   }
 
   const handlePlatforms = (e) => {
+    e.preventDefault();
     setForm({
       ...form,
       platforms: [...form.platforms, e.target.value]
-      
     })
+    setErrors(formValidate({
+      ...form,
+      [e.target.name]: e.target.value
+    }))
+    console.log(form)
   }
 
   const handleGenres = (e) => {
+    e.preventDefault();
     setForm({
       ...form,
       genre: [...form.genre, e.target.value]
     })
+    setErrors(formValidate({
+      ...form,
+      [e.target.name]: e.target.value
+    }))
+    console.log(form)
   }
 
   const handleDeletePlatforms = (e) => {
     setForm({
       ...form, 
       platforms : form.platforms.filter(platf => platf !== e)
- 
     })
   }
 
@@ -83,7 +96,8 @@ export default function CreateGame() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(formValidate.length) return alert('Faltan campos por completar');
+    
+    if(errors.length) return alert('Faltan campos por completar');
     dispatch(postVideogame(form));
     alert('Videogame Created  Successfully')
     setForm({
@@ -107,7 +121,7 @@ export default function CreateGame() {
     <div className={cg.container}>
       <h1 className={cg.title}>Create your own videogame</h1>
       <Link to='/home'>
-        <button className={cg.btnBack}>Back to Home</button>
+        <button type="button" className={cg.btnBack}>Back to Home</button>
       </Link>
       <form className={cg.containerForm} onSubmit={(e) => handleSubmit(e) } >
 
@@ -150,6 +164,7 @@ export default function CreateGame() {
         <div className={cg.containerInput}>
           <label>Platforms:</label>
           <select name='platforms' onChange={ (e) => handlePlatforms(e)}>
+          <option value='' >Select Platforms</option>
             {
               platforms.map( platf => (
                 <option value={platf} key={platf} >{platf}</option>
@@ -163,9 +178,9 @@ export default function CreateGame() {
             <ul>
               {
                 form.platforms.map((platf, i) => (
-                  <div key={i}>
+                  <div className={cg.option} key={i}>
                     <li name={platf} value={i+1}>{platf}</li>
-                    <button onClick={ () => handleDeletePlatforms(platf)}>X</button>
+                    <button type="button" onClick={ () => handleDeletePlatforms(platf)}>X</button>
                   </div>
                 ))
               }
@@ -175,6 +190,7 @@ export default function CreateGame() {
         <div className={cg.containerInput}>
           <label>Genres:</label>
           <select name="genres" onChange={ (e) => handleGenres(e) }>
+            <option value='' >Select Genres</option>
             {
               genres.map(gnr => (
                 <option value={gnr.name} key={gnr.name} >{gnr.name}</option>
@@ -188,9 +204,9 @@ export default function CreateGame() {
             <ul>
               {
                 form.genre.map((gnr, i) => (
-                  <div key={i}>
+                  <div className={cg.option} key={i}>
                     <li>{gnr}</li>
-                    <button onClick={ () => handleDeleteGenres(gnr)}>X</button>
+                    <button type="button" onClick={ () => handleDeleteGenres(gnr)}>X</button>
                   </div>
                 ))
               }

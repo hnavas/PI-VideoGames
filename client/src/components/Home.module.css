@@ -6,25 +6,7 @@ h1, h2, h3, h4, h5, a {
 .container {
   width: 100%;
   height: 340vh;
-  background-image: linear-gradient(
-    to bottom right,
-    #023e8a 0%,
-    #5fa8d3 20%,
-    #0a1128 40%,
-    #001f54 60%,
-    #5fa8d3 70%
-  );
-
-  background-size: 200% 200%;
-  animation: movimiento 15s linear infinite alternate;
-}
-@keyframes movimiento {
-  from {
-    background-position: 0 0;
-  }
-  to {
-    background-position: 100% 100%;
-  }
+  background-image: linear-gradient(to right, #a8dadc, #92c8d0, #7db7c4, #6aa5b9, #5993ad, #4c819b, #3f7089, #325f78, #254a5e, #193745, #0e242e, #001219);
 }
 
 .containerCard {
@@ -34,7 +16,7 @@ h1, h2, h3, h4, h5, a {
   justify-content: center;
   background-color: rgba(12, 8, 1, 0.252);
   border-radius: 15px;
-  margin: 0 80px ;
+  margin: 0 85px;
 }
 
 .containerButtons {

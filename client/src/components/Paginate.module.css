@@ -22,7 +22,7 @@
 }
 
 .selectedPage{
-  background-color:rgba(36, 34, 39, 0.909);
+  background-color:rgba(148, 148, 149, 0.909);
   color: white;
   width: 35px;
   height: 35px;
@@ -40,10 +40,22 @@
 
 .page:hover{
   background: white;
-  background-color: rgba(135, 131, 133, 0.363);
+  background-color: rgb(135, 131, 133);
 }
 
 .btnPage {
-  width: 80px;
-  text-transform: uppercase;
+  width: 35px;
+  height: 35px;
+  color: white;
+  border: 0.5px solid grey;
+  background-color: rgba(37, 37, 39, 0.739);
+  border-radius: none;
+	font-weight: bold;
+	font-size: 18px;
 }
+
+.btnPage:hover {
+	background: white;
+  background-color: rgba(135, 131, 133, 0.363);
+}
+

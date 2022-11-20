@@ -2,7 +2,6 @@ import {
   GET_VIDEOGAMES, 
   GET_GENRES,
   GET_PLATFORMS,
-  GET_DETAILS, 
   GET_VIDEOGAME_BY_NAME, 
   GET_VIDEOGAME_BY_Id, 
   POST_VIDEOGAME, 
@@ -15,6 +14,7 @@ import {
 const initialState = {
   videogames: [],
   allFilteredGames: [],
+  details: [],
   genres: [],
   platforms: [],
 };
@@ -45,7 +45,7 @@ function rootReducer(state = initialState, action) {
     case GET_VIDEOGAME_BY_Id:
       return {
         ...state,
-        videogames: action.payload
+        details: action.payload
       }
     case POST_VIDEOGAME:
       return {

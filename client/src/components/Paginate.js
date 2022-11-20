@@ -5,8 +5,8 @@ export default function Paginate({gamesByPage, stateVideogames, actualPage, pagi
   const numOfPages = [];
   const totalPages = Math.ceil(stateVideogames/gamesByPage);
   let page = 1;
-  let next = 'Next>>'
-  let prev = '<<Prev'
+  let next = '>>'
+  let prev = '<<'
 
   while(page <= Math.ceil(stateVideogames/gamesByPage)) {
     numOfPages.push(page);

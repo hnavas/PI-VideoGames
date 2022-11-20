@@ -44,9 +44,9 @@ const getVideogameDB = async () => {
       genres: el.Genres.map(el => el.name),
       rating: el.rating
     }
-  })
+  });
   return arrGamesDB;
-};
+}
 
 const getAllVideogames = async () => {
   const apiData = await getVideogameApi();
@@ -67,7 +67,7 @@ const filterById = async (id) => {
       rating: findById.data.rating,
       platforms: findById.data.platforms.map(p => p.platform.name),
       genres: findById.data.genres.map(g => g.name),
-    };
+    }
   } else {
     return await Videogame.findByPk(id, {
       include: {
@@ -79,7 +79,7 @@ const filterById = async (id) => {
       },
     });
   }
-};
+}
 
 const getAllGenres = async () => {
   const dataApi = await axios.get(`${urlApi}genres?key=${API_KEY}`);
