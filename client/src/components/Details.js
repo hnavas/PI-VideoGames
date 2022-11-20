@@ -19,7 +19,7 @@ export default function  Details(props) {
 
   return (
     <div className={dt.container}>
-      <h1 >Videogame Details</h1>
+      <h1 className={dt.title} >Videogame Details</h1>
       <Link to='/home'>
         <button className={dt.btnBack} type="button" >Back to Home</button>
       </Link>
@@ -27,13 +27,19 @@ export default function  Details(props) {
       {
         Object.entries(details).length ?
         <div className={dt.containerCard} >
-          <h1>{details.name}</h1>
-          <img src={details.image} alt={details.name} height='400px'></img>
-          <p>Description: {details.description}</p>
-          <h2>Released at: {details.released}</h2>
-          <h2>Rating: {details.rating}</h2>
-          <h2>Platforms: { details.platforms.join(' - ')} </h2>
-          <h2>Genres: { !isNaN(details.id) ? details.genres.join(' - ') : details.Genres.map(el => el.name).join(' - ') }</h2>
+          <div className={dt.containerCardDiv}>
+              <img src={details.image} alt={details.name} height='400px'></img>
+          </div>
+          <div className={dt.containerCardDiv}>
+              <h1>{details.name}</h1>
+              <p><span>Description:</span> {details.description}</p>
+              <div>
+                <h3><span>Released at:</span> {details.released}</h3>
+                <h3><span>Rating:</span> {details.rating}</h3>
+                <h3><span>Platforms:</span> { details.platforms.join(' - ')}   </h3>
+                <h3><span>Genres:</span> { !isNaN(details.id) ? details.genres.join(' - ') : details.Genres.map(el => el.name).join(' - ') }</h3>
+              </div>
+          </div>
         </div> :
         <div className={dt.loading}>
           <div className={`${dt.loadingSkeleton} ${dt.titleSkeleton}`}></div>

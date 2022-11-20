@@ -6,7 +6,21 @@ h1, h2, h3, h4, h5, a {
 .container {
   width: 100%;
   height: 340vh;
-  background-image: linear-gradient(to right, #a8dadc, #92c8d0, #7db7c4, #6aa5b9, #5993ad, #4c819b, #3f7089, #325f78, #254a5e, #193745, #0e242e, #001219);
+  background-image: 
+    linear-gradient
+      (to right, 
+      #a8dadc, 
+      #92c8d0, 
+      #7db7c4, 
+      #6aa5b9, 
+      #5993ad, 
+      #4c819b, 
+      #3f7089, 
+      #325f78, 
+      #254a5e, 
+      #193745, 
+      #0e242e,
+      #001219);
 }
 
 .containerCard {
