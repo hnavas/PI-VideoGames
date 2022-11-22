@@ -62,7 +62,7 @@ const filterById = async (id) => {
       id: findById.data.id,
       name: findById.data.name,
       image: findById.data.background_image,
-      description: findById.data.description_raw,
+      description: findById.data.description_raw, 
       released: findById.data.released,
       rating: findById.data.rating,
       platforms: findById.data.platforms.map(p => p.platform.name),

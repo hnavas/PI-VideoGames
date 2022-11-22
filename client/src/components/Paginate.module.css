@@ -41,6 +41,7 @@
 .page:hover{
   background: white;
   background-color: rgb(135, 131, 133);
+  cursor: pointer;
 }
 
 .btnPage {
@@ -57,5 +58,6 @@
 .btnPage:hover {
 	background: white;
   background-color: rgba(135, 131, 133, 0.363);
+  cursor: pointer;
 }
 

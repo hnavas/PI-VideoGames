@@ -8,11 +8,14 @@ import {
   FILTER_BY_STATUS,  
   FILTER_BY_GENRES,
   ORDER_ALPHABETICALLY,
-  ORDER_BY_RATING
+  ORDER_BY_RATING,
+  LOADING
 } from '../actions-types/types';
 
 export function getVideogames() {
+
   return async function(dispatch) {
+    dispatch({type: LOADING});
     let res = await axios.get('http://localhost:3001/videogames');
     return dispatch({
       type : GET_VIDEOGAMES,
@@ -23,7 +26,9 @@ export function getVideogames() {
 
 export function getByName(name) {
   return async function(dispatch) {
+    
     try {
+      dispatch({type: LOADING});
       let res = await axios.get(`http://localhost:3001/videogames?name=${name}`);
       return dispatch({
         type : GET_VIDEOGAME_BY_NAME,

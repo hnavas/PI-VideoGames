@@ -13,6 +13,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const stateVideogames = useSelector(state => state.videogames);
   const stateGenres = useSelector(state => state.genres);
+  const stateLoading = useSelector(state => state.loading);
 
   const [ order, setOrder ] = useState(false);
 
@@ -24,6 +25,7 @@ export default function Home() {
   const lastGame = actualPage * gamesByPage;
   const firstGame = lastGame - gamesByPage;
   const actualGames = stateVideogames.slice(firstGame, lastGame);
+  console.log('ac', actualGames)
   //3. declaro mi constate de paginado
   const paginate = numPage => {
     setActualPage(numPage);
@@ -64,83 +66,119 @@ export default function Home() {
 
   return (
     <div className={s.container}>
-      <h1 className={s.title}>Welcome to Home</h1>
-      <SearchBar/>
-      <div className={s.containerButtons}>
+      <div className={s.nav}>
         <div>
-          <Link to='/create'>
-            <button className={s.refreshButton} >Create</button>
-          </Link>
+        <Link to='/home'>
+            <h1>VideoGames</h1>
+         </Link>
         </div>
-        <div>
-          <button className={s.refreshButton} onClick={(e) => handleUpdate(e)}>Reload</button>
+        <div className={s.containerButtons}>
+          <div>
+            <Link to='/create'>
+              <button className={`${s.btnCR} ${s.btnLF}`} >New Game</button>
+            </Link>
+          </div>
+          <div>
+            <button className={`${s.btnCR} ${s.btnRH}`} onClick={(e) => handleUpdate(e)}>Reload</button>
+          </div>
+        </div>
+        <div className={s.navSearch}>
+          <SearchBar
+            setActualPage={setActualPage}
+          />
         </div>
       </div>
-      <div>
-        <div className={s.filterBar}>
-          <select onChange={(e) => handleOrderByAZ(e)}> 
-            <option hidden >--Order by AZ--</option>
-            <option value='az'>Sort A-Z</option>
-            <option value='za'>Sort Z-A</option>
-          </select>
+        <div>
+          <div className={s.filterBar}>
+            <select className={s.filtLF} onChange={(e) => handleOrderByAZ(e)}> 
+              <option hidden >--Order by AZ--</option>
+              <option value='az'>Sort A-Z</option>
+              <option value='za'>Sort Z-A</option>
+            </select>
 
-          <select onChange={(e) => handleOrderByRating(e)}> 
-            <option value='' hidden >--Order by Rating--</option>
-            <option value='high'>High Rating</option>
-            <option value='low'>Low Rating</option>
-          </select>
+            <select className={s.filtCenter} onChange={(e) => handleOrderByRating(e)}> 
+              <option value='' hidden >--Order by Rating--</option>
+              <option value='high'>High Rating</option>
+              <option value='low'>Low Rating</option>
+            </select>
 
-          <select onChange={(e) => handleFilterByStatus(e)}>
-            <option value='' hidden>--Filter by Status--</option>
-            <option value='all'>All</option>
-            <option value='created'>Created</option>
-            <option value='existing'>Existing</option>
-          </select>
+            <select className={s.filtCenter} onChange={(e) => handleFilterByStatus(e)}>
+              <option value='' hidden>--Filter by Status--</option>
+              <option value='all'>All</option>
+              <option value='created'>Created</option>
+              <option value='existing'>Existing</option>
+            </select>
 
-          <select onChange={(e) => handleFilterByGenres(e)}>
-            <option hidden >--Filter By Genre--</option>
-            <option value='all'>All Genres</option>
+            <select className={s.filtRH} onChange={(e) => handleFilterByGenres(e)}>
+              <option hidden >--Filter By Genre--</option>
+              <option value='all'>All Genres</option>
+              {
+                stateGenres.map(g => (
+                  <option key={g.id} value={g.name}>{g.name}</option>
+                ))
+              }
+            </select>
+          
+        </div>
+      </div>
+      {
+        stateLoading ? 
+        (
+          <div className={s.containerLoading}>
+            <div className={s.loading}>
+              <div className={`${s.loadingSkeleton} ${s.titleSkeleton}`}></div>
+              <div className={`${s.loadingSkeleton} ${s.descriptionSkeleton}`}></div>
+            </div>
+            <div className={s.loading}>
+              <div className={`${s.loadingSkeleton} ${s.titleSkeleton}`}></div>
+              <div className={`${s.loadingSkeleton} ${s.descriptionSkeleton}`}></div>
+            </div>
+            <div className={s.loading}>
+              <div className={`${s.loadingSkeleton} ${s.titleSkeleton}`}></div>
+              <div className={`${s.loadingSkeleton} ${s.descriptionSkeleton}`}></div>
+            </div>
+          </div>
+        ):
+        (<div>
+          <Paginate
+            gamesByPage={gamesByPage}
+            stateVideogames = {stateVideogames.length}
+            actualPage = {actualPage}
+            paginate = {paginate}
+          />
+
+          <div className={s.containerCard}>
             {
-              stateGenres.map(g => (
-                <option key={g.id} value={g.name}>{g.name}</option>
-              ))
+              actualGames.length ? actualGames.map(game => {
+                return (
+                  <div className={s.cards} key={game.id}>
+                    <Link to={`home/${game.id}`} >
+                      <Card
+                        id={game.id}
+                        key={game.id}
+                        name={game.name}
+                        image={game.image}
+                        genres={game.genres.join(' - ')}
+                      />
+                    </Link>
+                  </div>
+                ) 
+              }):
+              (<div>
+                <div>Not Found</div>
+              </div>)
             }
-          </select>
+          </div>
+        
+        <Paginate
+          gamesByPage={gamesByPage}
+          stateVideogames = {stateVideogames.length}
+          actualPage = {actualPage}
+          paginate = {paginate}
+        />
         </div>
-      </div>
-      <Paginate
-        gamesByPage={gamesByPage}
-        stateVideogames = {stateVideogames.length}
-        actualPage = {actualPage}
-        paginate = {paginate}
-      />
-
-      <div className={s.containerCard}>
-        {
-          actualGames && actualGames.map(game => {
-            return (
-              <div className={s.cards} key={game.id}>
-                <Link to={`home/${game.id}`} >
-                  <Card
-                    id={game.id}
-                    key={game.id}
-                    name={game.name}
-                    image={game.image}
-                    genres={game.genres.join(' - ')}
-                  />
-                </Link>
-              </div>
-            );
-          })
-        }
-      </div>
-      
-      <Paginate
-        gamesByPage={gamesByPage}
-        stateVideogames = {stateVideogames.length}
-        actualPage = {actualPage}
-        paginate = {paginate}
-      />
+        )
+      }
     </div>
   )
 }

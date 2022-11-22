@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { getByName } from "../actions";
 import sc from "./SearchBar.module.css";
 
-export default function SearchBar() {
+export default function SearchBar({setActualPage}) {
   const dispatch = useDispatch();
   const [ name, setName ] = useState('');
 
@@ -13,8 +13,14 @@ export default function SearchBar() {
   }
 
   let handleSubmit = (e) => {
-    dispatch(getByName(name));
-    setName('');
+    e.preventDefault()
+    if(name.length) {
+      dispatch(getByName(name))
+    }else {
+      alert("Write minumum one word");
+    }
+    setName('')
+    setActualPage(1);
   }
 
   return (

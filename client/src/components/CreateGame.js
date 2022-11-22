@@ -23,6 +23,7 @@ const formValidate = (form) => {
 export default function CreateGame() {
   const dispatch = useDispatch();
   const history = useHistory();
+  console.log(history);
   const platforms = useSelector(state => state.platforms);
   const genres = useSelector(state => state.genres);
 

@@ -7,10 +7,9 @@ router.get('/', async (req, res) => {
   const {name} = req.query;
   let allVideogames = await fn.getAllVideogames();
   if(name) {
-    let filteredByName =  allVideogames.filter(vg => vg.name.toLowerCase().includes(name.toLowerCase()));
-    filteredByName.length ?
-    res.status(200).send(filteredByName) :
-    res.status(404).send('No se encontro el Videogame'); 
+      let filteredByName =  allVideogames.filter(vg => vg.name.toLowerCase().includes(name.toLowerCase()));
+      filteredByName.length ? res.status(200).json(filteredByName) :
+      res.send().status(404);
   } else {
     res.status(200).json(allVideogames);
   }

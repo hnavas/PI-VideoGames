@@ -9,6 +9,7 @@ import {
   ORDER_BY_RATING,
   FILTER_BY_STATUS,
   FILTER_BY_GENRES,
+  LOADING
 } from '../actions-types/types';
 
 const initialState = {
@@ -17,15 +18,22 @@ const initialState = {
   details: [],
   genres: [],
   platforms: [],
+  loading: true
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
+    case LOADING:
+      return {
+        ...state,
+        loading: true
+      }
     case GET_VIDEOGAMES:
       return {
         ...state,
         videogames: action.payload,
-        allFilteredGames: action.payload
+        allFilteredGames: action.payload,
+        loading: false
       }
     case GET_GENRES:
       return {
@@ -38,9 +46,11 @@ function rootReducer(state = initialState, action) {
         platforms: action.payload
       }
     case GET_VIDEOGAME_BY_NAME:
+      console.log(action.payload)
       return {
         ...state,
-        videogames: action.payload
+        videogames: action.payload,
+        loading: false
       }
     case GET_VIDEOGAME_BY_Id:
       return {
